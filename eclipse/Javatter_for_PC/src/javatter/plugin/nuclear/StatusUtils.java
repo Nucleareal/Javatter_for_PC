@@ -2,6 +2,7 @@ package javatter.plugin.nuclear;
 
 import twitter4j.Status;
 import twitter4j.User;
+import twitter4j.UserMentionEntity;
 
 public class StatusUtils
 {
@@ -31,5 +32,18 @@ public class StatusUtils
 	public static String getInReplyToHeader(Status status)
 	{
 		return "@"+status.getUser().getScreenName()+" ";
+	}
+
+	public static String removeMentions(Status status)
+	{
+		String s = status.getText();
+		UserMentionEntity[] ue = status.getUserMentionEntities();
+		for(UserMentionEntity u : ue)
+		{
+			s = s.replace(u.getScreenName(), "");
+		}
+		s = s.replace("@", "");
+		s = s.replace(" ", "");
+		return s;
 	}
 }
