@@ -11,10 +11,19 @@ import twitter4j.UserList;
 import com.orekyuu.javatter.account.TwitterManager;
 import com.orekyuu.javatter.model.PopupModel;
 
+/**
+ * ポップアップのController
+ * @author orekyuu
+ *
+ */
 public class PopupController extends UserStreamController{
 
 	private PopupModel model;
 
+	/**
+	 * モデルを設定
+	 * @param model
+	 */
 	public void setModel(PopupModel model){
 		this.model=model;
 	}
@@ -36,10 +45,16 @@ public class PopupController extends UserStreamController{
 
 	@Override
 	public void onStatus(Status arg0) {
-		if(arg0.isRetweetedByMe()){
-			Status status=arg0.getRetweetedStatus();
-			User user=arg0.getUser();
-			model.onRT(user, status);
+		try {
+			if(arg0.isRetweet() && arg0.getRetweetedStatus().getUser().getScreenName().equals(TwitterManager.getInstance().getTwitter().getScreenName())){
+				Status status=arg0.getRetweetedStatus();
+				User user=arg0.getUser();
+				model.onRT(user, status);
+			}
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (TwitterException e) {
+			e.printStackTrace();
 		}
 	}
 

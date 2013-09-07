@@ -10,6 +10,11 @@ import twitter4j.User;
 import com.orekyuu.javatter.util.ImageManager;
 import com.orekyuu.javatter.viewobserver.PopupViewObserver;
 
+/**
+ * ポップアップの描画クラス
+ * @author orekyuu
+ *
+ */
 public class PopupView implements PopupViewObserver {
 
 	private TrayIcon icon;
@@ -44,7 +49,7 @@ public class PopupView implements PopupViewObserver {
 
 	@Override
 	public void onUnFav(User user, Status status) {
-		icon.displayMessage(user.getName()+"にアンファボされました", status.getText(), MessageType.NONE);
+		icon.displayMessage(user.getName()+"にあんふぁぼされました", status.getText(), MessageType.NONE);
 	}
 
 }

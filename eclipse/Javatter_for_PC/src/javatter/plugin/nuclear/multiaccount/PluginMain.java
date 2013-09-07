@@ -27,7 +27,7 @@ public class PluginMain extends PluginAdapter
 	@Override
 	public String getVersion()
 	{
-		return "v1.0.0 for α";
+		return "1 for α";
 	}
 
 	@Override

@@ -11,10 +11,12 @@ public abstract class PluginAdapter extends JavatterPlugin
 	private UserStreamController _cont;
 	private UserStreamLogic _logic;
 	private Class<? extends PluginConfigAdapter> _cq;
+	protected SaveData _data;
 
 	protected boolean init(Class<? extends PluginModelAdapter> clazz, Class<? extends PluginConfigAdapter> claqq)
 	{
 		boolean result = true;
+		_data = getSaveData();
 		_cq = claqq;
 		_cont = new UserStreamController();
 		try
@@ -54,7 +56,13 @@ public abstract class PluginAdapter extends JavatterPlugin
 	protected IJavatterTab getPluginConfigViewObserver()
 	{
 		IJavatterTab ins = null;
-		try { ins = _cq.getConstructor(SaveData.class).newInstance(new Object[]{getSaveData()}); } catch(Exception e){}
+		try
+		{
+			ins = _cq.getConstructor(SaveData.class).newInstance(new Object[]{_data});
+		}
+		catch(Exception e)
+		{
+		}
 		return ins;
 	}
 

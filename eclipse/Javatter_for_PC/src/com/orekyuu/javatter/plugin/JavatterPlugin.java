@@ -8,12 +8,18 @@ import twitter4j.TwitterException;
 import com.orekyuu.javatter.account.TwitterManager;
 import com.orekyuu.javatter.controller.MainWindowController;
 import com.orekyuu.javatter.controller.UserStreamController;
+import com.orekyuu.javatter.main.Main;
 import com.orekyuu.javatter.util.SaveData;
 import com.orekyuu.javatter.util.SaveDataManager;
 import com.orekyuu.javatter.view.IJavatterTab;
 import com.orekyuu.javatter.view.MainWindowView;
 import com.orekyuu.javatter.view.PluginDefaultConfigView;
 
+/**
+ * Javatterのプラグインを表す抽象クラス
+ * @author orekyuu
+ *
+ */
 public abstract class JavatterPlugin
 {
 	/**
@@ -35,6 +41,11 @@ public abstract class JavatterPlugin
 	protected String userName;
 
 	/**
+	 * プラグインローダー
+	 */
+	private JavatterPluginLoader loader;
+
+	/**
 	 * セーブデータの補助クラス
 	 */
 	private SaveData savedata;
@@ -46,6 +57,11 @@ public abstract class JavatterPlugin
 	 * プラグインのコンフィグ画面
 	 */
 	private IJavatterTab configTab;
+
+	/**
+	 * ロード済みかどうか
+	 */
+	private boolean isLoaded;
 
 	public JavatterPlugin(){
 		twitter=TwitterManager.getInstance().getTwitter();
@@ -59,6 +75,14 @@ public abstract class JavatterPlugin
 		dir=new File("SaveData/"+getPluginName());
 		registerSaveData();
 		configTab=getPluginConfigViewObserver();
+	}
+
+	protected final void load(){
+		isLoaded=true;
+	}
+
+	protected final boolean isLoaded(){
+		return isLoaded;
 	}
 
 	/**
@@ -112,12 +136,43 @@ public abstract class JavatterPlugin
 	}
 
 	/**
+	 * プラグインローダーを設定
+	 * @param loader
+	 */
+	protected final void setPluginLoader(JavatterPluginLoader loader){
+		this.loader=loader;
+	}
+
+	/**
+	 * 指定したプラグインがロードされているか
+	 * @param name プラグインの名前
+	 * @return
+	 */
+	protected boolean isPluginLoaded(String name){
+		return loader.isPluginLoaded(name);
+	}
+
+	/**
 	 * コンフィグ用のViewを返します。<br>
 	 * コンフィグを作りたい場合はオーバーライドして独自のConfigViewを返すようにしてください
 	 * @return
 	 */
 	protected IJavatterTab getPluginConfigViewObserver(){
 		return new PluginDefaultConfigView();
+	}
+
+	/**
+	 * クラスがロードされた直後に呼ばれます
+	 */
+	public void preInit(){
+
+	}
+
+	/**
+	 * すべてのプラグインのinitが呼ばれた後に呼ばれます
+	 */
+	public void postInit(){
+
 	}
 
 	/**
@@ -187,6 +242,39 @@ public abstract class JavatterPlugin
 	 * @param builder
 	 */
 	public void addTweetObjectBuider(TweetObjectBuilder builder){
-		this.controller.addTweetObjectBuilder(builder);
+		JavatterPluginLoader.addTweetObjectBuilder(builder);
+	}
+
+	/**
+	 * プロフィールに変更を加えるクラスを登録
+	 * @param builder
+	 */
+	public void addProfileBuilder(JavatterProfileBuilder builder){
+		JavatterPluginLoader.addProfileBuilder(builder);
+	}
+
+	/**
+	 * Javatterを表示しているViewを返す
+	 * @return
+	 */
+	protected MainWindowView getMainView(){
+		return view;
+	}
+
+	/**
+	 * Javatterのバージョンを返します
+	 * @return
+	 */
+	protected int getJavatterVersion(){
+		return Main.getJavatterVersion();
+	}
+
+	/**
+	 * プラグインの名前からプラグインインスタンスを取得します
+	 * @param pluginName プラグインの名前
+	 * @return
+	 */
+	protected JavatterPlugin getPlugin(String pluginName){
+		return loader.getPlugin(pluginName);
 	}
 }
