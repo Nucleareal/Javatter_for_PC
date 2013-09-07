@@ -10,6 +10,11 @@ import twitter4j.Status;
 import com.orekyuu.javatter.logic.TwitterUserEventLogic;
 import com.orekyuu.javatter.viewobserver.UserEventViewObserver;
 
+/**
+ * ユーザーイベントのモデル
+ * @author orekyuu
+ *
+ */
 public class UserEventListener implements TwitterUserEventLogic,ActionListener{
 
 	private Object rt;
@@ -43,7 +48,6 @@ public class UserEventListener implements TwitterUserEventLogic,ActionListener{
 		if(e.getSource().equals(rt)){
 			view.onUserEvent("rt", tweet);
 			JToggleButton b=(JToggleButton) rt;
-			b.setSelected(false);
 			b.setEnabled(false);
 		}else if(e.getSource().equals(fav)){
 			JToggleButton b=(JToggleButton) fav;

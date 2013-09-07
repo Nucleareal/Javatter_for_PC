@@ -6,7 +6,6 @@ import java.awt.event.AdjustmentListener;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.regex.Pattern;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -23,6 +22,11 @@ import com.orekyuu.javatter.util.TweetObjectFactory;
 import com.orekyuu.javatter.viewobserver.UserEventViewObserver;
 import com.orekyuu.javatter.viewobserver.UserStreamViewObserver;
 
+/**
+ * リプライタブ描画クラス
+ * @author orekyuu
+ *
+ */
 public class ReplyView
 implements UserStreamViewObserver, IJavatterTab, AdjustmentListener
 {
@@ -32,8 +36,15 @@ implements UserStreamViewObserver, IJavatterTab, AdjustmentListener
 	private JScrollPane tp;
 	private List<TweetObjectBuilder> builders;
 
-	private Queue<Status> queue=new LinkedList<Status>();
+	private volatile Queue<Status> queue=new LinkedList<Status>();
+	private boolean queueFlag;
+	private boolean queueEvent;
+	private JPanel last;
 
+	/**
+	 * @param observer ユーザーイベントリスナ
+	 * @param builders TweetObjectBuilderのリスト
+	 */
 	public ReplyView(UserEventViewObserver observer,List<TweetObjectBuilder> builders)
 	{
 		this.panel = new JPanel();
@@ -48,10 +59,11 @@ implements UserStreamViewObserver, IJavatterTab, AdjustmentListener
 		this.builders=builders;
 	}
 
+	@Override
 	public void update(UserStreamLogic model)
 	{
 		if (model instanceof ReplyModel) {
-			if(tp.getVerticalScrollBar().getValue()==0){
+			if(tp.getVerticalScrollBar().getValue()==0&&!queueFlag){
 				addObject(model.getStatus());
 			}else{
 				queue.add(model.getStatus());
@@ -60,25 +72,31 @@ implements UserStreamViewObserver, IJavatterTab, AdjustmentListener
 		}
 	}
 
-	private void setNumber(int num){
-		Pattern p=Pattern.compile("^リプライ(\\(\\d+\\))?$");
+	private synchronized void setNumber(int num){
 		JTabbedPane tab=(JTabbedPane) component.getParent();
 		for(int i=0;i<tab.getTabCount();i++){
-			if(p.matcher(tab.getTitleAt(i)).matches()){
+			if(tab.getComponentAt(i) == this.component){
 				if(num!=0){
-					tab.setTitleAt(i, "リプライ("+num+")");
+					tab.setTitleAt(i, "Reply("+num+")");
 				}else{
-					tab.setTitleAt(i, "リプライ");
+					tab.setTitleAt(i, "Reply");
 				}
 			}
 		}
 	}
 
-	private void addObject(Status status){
+	private JPanel createObject(Status status){
 		TweetObjectFactory factory = new TweetObjectFactory(status,builders);
+		return (JPanel) factory.createTweetObject(this.observer).getComponent();
+	}
+
+	private synchronized void addObject(Status status){
+		JPanel jpanel = createObject(status);
+		jpanel.updateUI();
 		if (this.panel.getComponentCount() == 1000) this.panel.remove(999);
-		this.panel.add(factory.createTweetObject(this.observer), 0);
+		this.panel.add(jpanel, 0);
 		this.panel.updateUI();
+		last = jpanel;
 	}
 
 	@Override
@@ -90,11 +108,30 @@ implements UserStreamViewObserver, IJavatterTab, AdjustmentListener
 	@Override
 	public void adjustmentValueChanged(AdjustmentEvent arg0) {
 		if(arg0.getValue()==0){
-			while(!queue.isEmpty()){
-				addObject(queue.poll());
+			if(queueEvent){
+				return;
 			}
-			JTabbedPane tab=(JTabbedPane) component.getParent();
-			tab.setTitleAt(1, "リプライ");
+			queueEvent = true;
+			Thread th=new Thread(){
+				@Override
+				public void run(){
+					queueFlag=true;
+					JPanel lastPanel = last;
+					while(!queue.isEmpty()){
+						addObject(queue.poll());
+					}
+					setNumber(0);
+					queueFlag=false;
+					if(lastPanel != null){
+						tp.validate();
+						tp.getVerticalScrollBar().setValue(lastPanel.getLocation().y);
+					}
+				}
+			};
+			th.start();
+		}
+		else{
+			queueEvent = false;
 		}
 	}
 }

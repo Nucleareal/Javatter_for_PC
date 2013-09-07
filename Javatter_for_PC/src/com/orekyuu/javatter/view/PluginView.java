@@ -18,6 +18,11 @@ import javax.swing.ListSelectionModel;
 import com.orekyuu.javatter.util.BackGroundColor;
 import com.orekyuu.javatter.viewobserver.PluginViewObserver;
 
+/**
+ * プラグイン管理のタブを表すクラス
+ * @author orekyuu
+ *
+ */
 public class PluginView implements PluginViewObserver, IJavatterTab{
 
 	private final DefaultListModel<String> model = new DefaultListModel<String>();
@@ -76,12 +81,13 @@ public class PluginView implements PluginViewObserver, IJavatterTab{
 	@Override
 	public void update(String[] pluginName,String[] version)
 	{
-		model.removeAllElements();
+		model.clear();
 		this.pluginName.clear();
 		for (int i=0;i<pluginName.length;i++){
 			model.addElement(pluginName[i]+" "+version[i]);
 			this.pluginName.add(pluginName[i]);
 		}
+
 	}
 
 	@Override
