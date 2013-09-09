@@ -4,6 +4,8 @@ import twitter4j.Status;
 import twitter4j.User;
 import twitter4j.UserMentionEntity;
 
+import com.orekyuu.javatter.account.TwitterManager;
+
 public class StatusUtils
 {
 	public static User getOwner(Status status)
@@ -45,5 +47,23 @@ public class StatusUtils
 		s = s.replace("@", "");
 		s = s.replace(" ", "");
 		return s;
+	}
+
+	public static boolean isReplyToMe(Status status)
+	{
+		if(status.getInReplyToStatusId() > 0)
+		{
+			try
+			{
+				if(status.getInReplyToUserId() == TwitterManager.getInstance().getTwitter().getId())
+				{
+					return true;
+				}
+			}
+			catch(Exception e)
+			{
+			}
+		}
+		return false;
 	}
 }

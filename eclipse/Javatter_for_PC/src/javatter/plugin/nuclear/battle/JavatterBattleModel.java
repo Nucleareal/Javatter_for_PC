@@ -10,14 +10,13 @@ import twitter4j.Status;
 import twitter4j.StatusUpdate;
 
 import com.orekyuu.javatter.account.TwitterManager;
-import com.orekyuu.javatter.util.JavaBeamUtil;
 
 public class JavatterBattleModel extends PluginModelAdapter
 {
 	@Override
 	public void onStatus(Status status)
 	{
-		if(StatusUtils.isnRetweet(status) && JavaBeamUtil.isJavaBeam(StatusUtils.getText(status)))
+		if(StatusUtils.isnRetweet(status) && JavaBattleUtil.isJavaBeam(status))
 		{
 			try
 			{
@@ -40,6 +39,9 @@ public class JavatterBattleModel extends PluginModelAdapter
 			Random r1 = new Random(System.currentTimeMillis());
 			int at = r0.nextInt(101);
 			int df = r1.nextInt(101);
+
+			at = (int)(10 * Math.sqrt(at));
+			df = (int)(10 * Math.sqrt(df));
 
 			String s0 = String.format("%03d", at);
 			String s1 = String.format("%03d", df);

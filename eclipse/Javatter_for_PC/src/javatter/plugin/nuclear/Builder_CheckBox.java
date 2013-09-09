@@ -43,6 +43,11 @@ public class Builder_CheckBox implements IViewCreator
 		return _box;
 	}
 
+	public JCheckBox create(String msg, final String name)
+	{
+		return create(msg, name, new ActionListener[]{});
+	}
+
 	public JPanel getRootPane()
 	{
 		return _root;

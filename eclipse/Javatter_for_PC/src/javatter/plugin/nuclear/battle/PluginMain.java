@@ -16,6 +16,7 @@ public class PluginMain extends PluginAdapter
 		AudioWrapper.get().load();
 		_data = getSaveData();
 		_data.setDefaultValue("isAvailable", false);
+		_data.setDefaultValue("isReplyBeam", false);
 		Refrecter.tryIn(getMainView());
 	}
 
@@ -28,7 +29,7 @@ public class PluginMain extends PluginAdapter
 	@Override
 	public String getVersion()
 	{
-		return "4 for β";
+		return "5 for β";
 	}
 
 	@Override

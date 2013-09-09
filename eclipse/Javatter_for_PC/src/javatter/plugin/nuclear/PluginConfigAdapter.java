@@ -1,8 +1,8 @@
 package javatter.plugin.nuclear;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.orekyuu.javatter.util.SaveData;
@@ -20,6 +20,16 @@ public abstract class PluginConfigAdapter implements IJavatterTab
 	@Override
 	public Component getComponent()
 	{
-		return new JPanel(new BorderLayout());
+		return LayoutUtil.newBoxLayout();
+	}
+
+	protected JPanel queuing(JComponent ... arr)
+	{
+		JPanel root = LayoutUtil.newBoxLayout();
+		for(JComponent p : arr)
+		{
+			root.add(p);
+		}
+		return root;
 	}
 }
