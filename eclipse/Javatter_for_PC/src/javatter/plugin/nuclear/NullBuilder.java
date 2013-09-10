@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComponent;
 
-public class NullBuilder implements IViewCreator
+public class NullBuilder extends Builder_Base
 {
 	@Override
 	public JComponent create(String msg, String name, ActionListener[] listeners)

@@ -6,7 +6,7 @@ import javax.swing.JButton;
 
 import com.orekyuu.javatter.util.SaveData;
 
-public class Builder_Button implements IViewCreator
+public class Builder_Button extends Builder_Base
 {
 	private JButton _button;
 	private SaveData _data;

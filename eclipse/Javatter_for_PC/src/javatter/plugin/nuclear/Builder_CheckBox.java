@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 import com.orekyuu.javatter.util.SaveData;
 
-public class Builder_CheckBox implements IViewCreator
+public class Builder_CheckBox extends Builder_Base
 {
 	private JPanel _root;
 	private JCheckBox _box;

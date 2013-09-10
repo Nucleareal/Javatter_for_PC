@@ -6,6 +6,9 @@ import javatter.plugin.nuclear.NumberUtil;
 import javatter.plugin.nuclear.PluginModelAdapter;
 import javatter.plugin.nuclear.StatusUtils;
 import javatter.plugin.nuclear.StringUtil;
+
+import javax.swing.JOptionPane;
+
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
 
@@ -34,14 +37,18 @@ public class JavatterBattleModel extends PluginModelAdapter
 				return;
 			}
 
-			String header = StatusUtils.getInReplyToHeader(status);
-			Random r0 = new Random(status.getId());
-			Random r1 = new Random(System.currentTimeMillis());
-			int at = r0.nextInt(101);
-			int df = r1.nextInt(101);
+			if(!PluginMain._data.getBoolean("isAutoGuard"))
+			{
+				boolean isAlert = !BeamStatus.get().isFullPower();
+				String str = ( isAlert ? ("攻撃力が予測ができません\n") : ("相手の予測攻撃力\n"+getPower(status.getId())+"\n" ) ) + "防御しますか？";
+				int res = JOptionPane.showConfirmDialog(null, str, "", JOptionPane.YES_NO_OPTION);
+				if(res != JOptionPane.YES_OPTION) return;
+			}
 
-			at = (int)(10 * Math.sqrt(at));
-			df = (int)(10 * Math.sqrt(df));
+			String header = StatusUtils.getInReplyToHeader(status);
+			Random r1 = new Random(System.currentTimeMillis());
+			int at = getPower(status.getId());
+			int df = usePower(System.currentTimeMillis());
 
 			String s0 = String.format("%03d", at);
 			String s1 = String.format("%03d", df);
@@ -51,12 +58,14 @@ public class JavatterBattleModel extends PluginModelAdapter
 			{
 				df = 101;
 				s1 = "Inf";
-				sl = "30億Javaデバイスガード"+StringUtil.repeat("！", r1.nextInt(10));
+				sl = (r1.nextInt(8) == 0 ? "Javaカリスマ" : "30億Javaデバイス")+"ガード"+StringUtil.repeat("！", r1.nextInt(10));
 			}
 
 			String text = sl+" [戦果|攻撃側:"+s0+" VS 守備側:"+s1+"] "+NumberUtil.getBaranceResult(at, df, "防衛失敗", "防衛成功", "均衡状態")+"です！";
 			StatusUpdate su = new StatusUpdate(header+text);
 			su.setInReplyToStatusId(status.getId());
+
+			if(at - df > 0) { BeamStatus.get().addDamage(df-at); }
 
 			try
 			{
@@ -66,5 +75,15 @@ public class JavatterBattleModel extends PluginModelAdapter
 			{
 			}
 		}
+	}
+
+	public int getPower(long seed)
+	{
+		return (int)(10 * Math.sqrt(new Random(seed).nextInt(BeamStatus.get().nodecr()+1)));
+	}
+
+	public int usePower(long seed)
+	{
+		return (int)(10 * Math.sqrt(new Random(seed).nextInt(BeamStatus.get().decr()+1)));
 	}
 }

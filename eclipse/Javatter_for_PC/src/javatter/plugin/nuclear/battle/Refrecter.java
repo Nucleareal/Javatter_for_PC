@@ -8,6 +8,7 @@ import java.util.Random;
 import javatter.plugin.nuclear.StringUtil;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import com.orekyuu.javatter.account.TwitterManager;
 import com.orekyuu.javatter.view.MainWindowView;
@@ -32,13 +33,41 @@ public class Refrecter
 				{
 					try
 					{
-						TwitterManager.getInstance().getTwitter().updateStatus(mainView.getTweetTextArea().getText()+"Javaビーム"+StringUtil.repeat("ﾋﾞ", 3+rand.nextInt(20))+StringUtil.repeat("w", 3+rand.nextInt(20)));
+						if(BeamStatus.get().isAvailableBeam())
+						{
+							if(PluginMain._data.getBoolean("isAlertOnBeam"))
+							{
+								int res = JOptionPane.showConfirmDialog(null, "本当にJavaビームを撃ちますか？\n今ならまだ踏みとどまって人間でいられますよ？", "警告", JOptionPane.YES_NO_OPTION);
+								if(JOptionPane.YES_OPTION != res)
+								{
+									return;
+								}
+							}
+							BeamStatus.get().decr();
+							String be = StringUtil.repeat("ﾋﾞ", 3+rand.nextInt(20));
+							String ww = StringUtil.repeat("w", 3+rand.nextInt(20));
+							String sx = mainView.getTweetTextArea().getText()+"Javaビーム"+be+ww;
+							if(BeamStatus.get().getRandomEmet())
+							{
+								be = StringUtil.repeat("ﾎﾞ", 3+rand.nextInt(10));
+								ww = StringUtil.repeat("…", 3+rand.nextInt(10));
+								sx = "Javaスライムｼﾞｮ"+be+ww;
+							}
+							TwitterManager.getInstance().getTwitter().updateStatus(sx);
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(null, "Javaパワー不足です！");
+						}
 					}
 					catch(Exception f)
 					{
 					}
 				}
 			});
+			BeamButtonRefresher bbr = new BeamButtonRefresher(jb);
+			BeamStatus.get().setRefresher(bbr);
+			bbr.changeColor();
 		}
 		catch(Exception e)
 		{

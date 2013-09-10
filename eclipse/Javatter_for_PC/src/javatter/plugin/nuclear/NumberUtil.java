@@ -10,4 +10,11 @@ public class NumberUtil
 		return eq;
 	}
 
+	public static int clamp(int l, int h, int v)
+	{
+		if(v < l) return l;
+		if(h < v) return h;
+		return v;
+	}
+
 }

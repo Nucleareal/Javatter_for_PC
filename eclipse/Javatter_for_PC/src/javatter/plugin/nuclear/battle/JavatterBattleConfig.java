@@ -23,6 +23,10 @@ public class JavatterBattleConfig extends PluginConfigAdapter
 
 		JCheckBox rep = new Builder_CheckBox(_data).create("リプライのビームにも応戦する", "isReplyBeam");
 
-		return queuing(box, rep);
+		JCheckBox auto = new Builder_CheckBox(_data).create("自動ガード", "isAutoGuard");
+
+		JCheckBox hand = new Builder_CheckBox(_data).create("手が滑らない(警告を出す)", "isAlertOnBeam");
+
+		return queuing(box, rep, auto, hand);
 	}
 }
