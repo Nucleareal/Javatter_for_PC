@@ -43,6 +43,17 @@ public class Refrecter
 									return;
 								}
 							}
+
+							if(BeamStatus.get().isMaxPower() && new Random().nextInt(16) == 0)
+							{
+								String st = "雄大なるJavaの歴史よ、太古よりのJava神よ、我にJavaの力を与え給え。今、Javaの力を解き放つ！Java波動七式";
+								String sk = StringUtil.repeat("！", 7+rand.nextInt(20));
+								String se = " "+getFooter(rand.nextInt());
+								BeamStatus.get().decr();
+								TwitterManager.getInstance().getTwitter().updateStatus(st+sk+se);
+								return;
+							}
+
 							BeamStatus.get().decr();
 							String be = StringUtil.repeat("ﾋﾞ", 3+rand.nextInt(20));
 							String ww = StringUtil.repeat("w", 3+rand.nextInt(20));
@@ -63,6 +74,12 @@ public class Refrecter
 					catch(Exception f)
 					{
 					}
+				}
+
+				private String getFooter(int rand)
+				{
+					for(;rand%13!=0;rand++);
+					return String.valueOf(rand);
 				}
 			});
 			BeamButtonRefresher bbr = new BeamButtonRefresher(jb);

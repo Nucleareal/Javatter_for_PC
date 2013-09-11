@@ -48,7 +48,7 @@ public class PluginMain extends PluginAdapter
 	@Override
 	public String getVersion()
 	{
-		return version()+"for β";
+		return version()+" for β";
 	}
 
 	@Override

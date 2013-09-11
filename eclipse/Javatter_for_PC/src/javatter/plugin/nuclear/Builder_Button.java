@@ -26,4 +26,9 @@ public class Builder_Button extends Builder_Base
 		}
 		return _button;
 	}
+
+	public JButton create(String msg, final String name)
+	{
+		return create(msg, name, new ActionListener[]{});
+	}
 }

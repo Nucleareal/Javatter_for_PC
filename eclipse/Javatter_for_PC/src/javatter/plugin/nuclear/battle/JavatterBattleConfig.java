@@ -1,11 +1,15 @@
 package javatter.plugin.nuclear.battle;
 
 import java.awt.Component;
+import java.awt.event.ActionListener;
 
+import javatter.plugin.nuclear.Builder_Button;
 import javatter.plugin.nuclear.Builder_CheckBox;
 import javatter.plugin.nuclear.Builder_Label;
 import javatter.plugin.nuclear.PluginConfigAdapter;
+import javatter.plugin.nuclear.URIOpener;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 
@@ -31,6 +35,8 @@ public class JavatterBattleConfig extends PluginConfigAdapter
 
 		JLabel lb = new Builder_Label(_data).create(BeamStatus.get().getHP(), "");
 
-		return queuing(box, rep, auto, hand, lb);
+		JButton jb = new Builder_Button(_data).create("フォーラムを開く", "openSite", new ActionListener[]{new URIOpener("http://www1221uj.sakura.ne.jp//bbs/viewtopic.php?f=4&t=9")});
+
+		return queuing(box, rep, auto, hand, lb, jb);
 	}
 }

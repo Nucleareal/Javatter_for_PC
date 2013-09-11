@@ -43,6 +43,11 @@ public class BeamStatus implements UserStreamLogic
 		return result;
 	}
 
+	public boolean isMaxPower()
+	{
+		return _power >= 255;
+	}
+
 	public boolean isAvailableBeam()
 	{
 		return _power >= 64;
@@ -76,7 +81,9 @@ public class BeamStatus implements UserStreamLogic
 		}
 		else
 		{
-			JOptionPane.showConfirmDialog(null, i+"のダメージを受けました");
+			String sz = i > 100 ? "Java神の怒りに触れ\n" : "";
+			i = i > 100 ? 100 : i;
+			JOptionPane.showConfirmDialog(null, sz+i+"のダメージを受けました");
 		}
 	}
 
