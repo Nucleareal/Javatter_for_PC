@@ -1,6 +1,7 @@
 package javatter.plugin.nuclear.battle;
 
 import javatter.plugin.nuclear.PluginAdapter;
+import javatter.plugin.nuclear.UpdateChecker;
 
 import com.orekyuu.javatter.controller.UserStreamController;
 import com.orekyuu.javatter.util.SaveData;
@@ -28,6 +29,8 @@ public class PluginMain extends PluginAdapter
 
 		Refrecter.tryIn(getMainView());
 
+		UpdateChecker.checkNeedToUpdate(version(), "JavatterBattle");
+
 		_ins = this;
 	}
 
@@ -45,12 +48,17 @@ public class PluginMain extends PluginAdapter
 	@Override
 	public String getVersion()
 	{
-		return "7 for β";
+		return version()+"for β";
 	}
 
 	@Override
 	protected IJavatterTab getPluginConfigViewObserver()
 	{
 		return new JavatterBattleConfig(getSaveData());
+	}
+
+	private String version()
+	{
+		return "8";
 	}
 }

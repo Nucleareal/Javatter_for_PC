@@ -13,9 +13,12 @@ public class BeamButtonRefresher
 		_button = b;
 	}
 
-	public void changeColor()
+	public void refreshButton()
 	{
 		Color color = BeamStatus.get().getColor();
+		Color fcolor = color.getRed() > 127 ? Color.black : Color.white;
+		_button.setText(BeamStatus.get().getText());
+		_button.setForeground(fcolor);
 		_button.setBackground(color);
 	}
 }

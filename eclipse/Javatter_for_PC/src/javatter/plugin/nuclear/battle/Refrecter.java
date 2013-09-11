@@ -67,7 +67,7 @@ public class Refrecter
 			});
 			BeamButtonRefresher bbr = new BeamButtonRefresher(jb);
 			BeamStatus.get().setRefresher(bbr);
-			bbr.changeColor();
+			bbr.refreshButton();
 		}
 		catch(Exception e)
 		{

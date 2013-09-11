@@ -33,7 +33,7 @@ public class BeamStatus implements UserStreamLogic
 	{
 		int result = _power > 100 ? 100 : _power;
 		_power -= result;
-		_bbr.changeColor();
+		_bbr.refreshButton();
 		return result;
 	}
 
@@ -52,7 +52,7 @@ public class BeamStatus implements UserStreamLogic
 	{
 		_power += i;
 		if(_power > 255) _power = 255;
-		_bbr.changeColor();
+		_bbr.refreshButton();
 	}
 
 	public Color getColor()
@@ -78,6 +78,20 @@ public class BeamStatus implements UserStreamLogic
 		{
 			JOptionPane.showConfirmDialog(null, i+"のダメージを受けました");
 		}
+	}
+
+	public String getHP()
+	{
+		return "Java体力: "+(100 - (_damage*100)/255)+"%";
+	}
+
+	public String getText()
+	{
+		if(!isAvailableBeam())
+			return "まだ撃てない";
+		if(!isFullPower())
+			return "Javaビーム";
+		return "Javaビーム！";
 	}
 
 	public boolean getRandomEmet()

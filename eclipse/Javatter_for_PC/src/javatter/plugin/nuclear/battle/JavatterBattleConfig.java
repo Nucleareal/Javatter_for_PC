@@ -3,9 +3,11 @@ package javatter.plugin.nuclear.battle;
 import java.awt.Component;
 
 import javatter.plugin.nuclear.Builder_CheckBox;
+import javatter.plugin.nuclear.Builder_Label;
 import javatter.plugin.nuclear.PluginConfigAdapter;
 
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 
 import com.orekyuu.javatter.util.SaveData;
 
@@ -27,6 +29,8 @@ public class JavatterBattleConfig extends PluginConfigAdapter
 
 		JCheckBox hand = new Builder_CheckBox(_data).create("手が滑らない(警告を出す)", "isAlertOnBeam");
 
-		return queuing(box, rep, auto, hand);
+		JLabel lb = new Builder_Label(_data).create(BeamStatus.get().getHP(), "");
+
+		return queuing(box, rep, auto, hand, lb);
 	}
 }

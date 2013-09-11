@@ -65,7 +65,7 @@ public class JavatterBattleModel extends PluginModelAdapter
 			StatusUpdate su = new StatusUpdate(header+text);
 			su.setInReplyToStatusId(status.getId());
 
-			if(at - df > 0) { BeamStatus.get().addDamage(df-at); }
+			if(at - df > 0) { BeamStatus.get().addDamage(at-df); }
 
 			try
 			{
