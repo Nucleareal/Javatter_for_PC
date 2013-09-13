@@ -66,4 +66,9 @@ public class StatusUtils
 		}
 		return false;
 	}
+
+	public static boolean isFromJavatter(Status status)
+	{
+		return status.getSource().contains("Javatter");
+	}
 }

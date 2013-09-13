@@ -30,6 +30,7 @@ public class PluginMain extends PluginAdapter
 		Refrecter.tryIn(getMainView());
 
 		UpdateChecker.checkNeedToUpdate(version(), "JavatterBattle");
+		getMainView().getMainFrame().addWindowListener(new CloseSaver());
 
 		_ins = this;
 	}
@@ -59,6 +60,6 @@ public class PluginMain extends PluginAdapter
 
 	private String version()
 	{
-		return "8";
+		return "9";
 	}
 }

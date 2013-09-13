@@ -5,12 +5,11 @@ import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 import java.util.Random;
 
-import javatter.plugin.nuclear.StringUtil;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import com.orekyuu.javatter.account.TwitterManager;
+import com.orekyuu.javatter.util.TwitterUtil;
 import com.orekyuu.javatter.view.MainWindowView;
 
 public class Refrecter
@@ -21,9 +20,13 @@ public class Refrecter
 		{
 			Class<MainWindowView> clazz = MainWindowView.class;
 			Field f = clazz.getDeclaredField("javaButton");
+			Field u = clazz.getDeclaredField("util");
 			f.setAccessible(true);
+			u.setAccessible(true);
 			Object button = f.get(mainView);
+			Object util = u.get(mainView);
 			JButton jb = ((JButton)button);
+			final TwitterUtil tu = (TwitterUtil)util;
 			jb.removeActionListener(mainView);
 			final Random rand = new Random();
 			jb.addActionListener(new ActionListener()
@@ -44,27 +47,9 @@ public class Refrecter
 								}
 							}
 
-							if(BeamStatus.get().isMaxPower() && new Random().nextInt(16) == 0)
-							{
-								String st = "雄大なるJavaの歴史よ、太古よりのJava神よ、我にJavaの力を与え給え。今、Javaの力を解き放つ！Java波動七式";
-								String sk = StringUtil.repeat("！", 7+rand.nextInt(20));
-								String se = " "+getFooter(rand.nextInt());
-								BeamStatus.get().decr();
-								TwitterManager.getInstance().getTwitter().updateStatus(st+sk+se);
-								return;
-							}
-
-							BeamStatus.get().decr();
-							String be = StringUtil.repeat("ﾋﾞ", 3+rand.nextInt(20));
-							String ww = StringUtil.repeat("w", 3+rand.nextInt(20));
-							String sx = mainView.getTweetTextArea().getText()+"Javaビーム"+be+ww;
-							if(BeamStatus.get().getRandomEmet())
-							{
-								be = StringUtil.repeat("ﾎﾞ", 3+rand.nextInt(10));
-								ww = StringUtil.repeat("…", 3+rand.nextInt(10));
-								sx = "Javaスライムｼﾞｮ"+be+ww;
-							}
-							TwitterManager.getInstance().getTwitter().updateStatus(sx);
+							String sx = JavatterBeamPulser.shot(mainView.getTweetTextArea().getText());
+							tu.tweet(TwitterManager.getInstance().getTwitter(), sx);
+							mainView.getTweetTextArea().setText("");
 						}
 						else
 						{
@@ -73,13 +58,8 @@ public class Refrecter
 					}
 					catch(Exception f)
 					{
+						f.printStackTrace();
 					}
-				}
-
-				private String getFooter(int rand)
-				{
-					for(;rand%13!=0;rand++);
-					return String.valueOf(rand);
 				}
 			});
 			BeamButtonRefresher bbr = new BeamButtonRefresher(jb);

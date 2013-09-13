@@ -1,4 +1,4 @@
-package com.orekyuu.javatter.main;
+﻿package com.orekyuu.javatter.main;
 
 import java.net.MalformedURLException;
 

@@ -74,7 +74,7 @@ public class JavatterBattleModel extends PluginModelAdapter
 			}
 			if(StringUtil.isJavaLaser(status))
 			{
-				BeamStatus.get().addDamage(101);
+				BeamStatus.get().addDamage(100);
 			}
 		}
 

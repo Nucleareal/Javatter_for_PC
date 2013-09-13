@@ -27,6 +27,7 @@ public class BeamStatus implements UserStreamLogic
 	{
 		_power = 0;
 		_damage = 0;
+		load();
 	}
 
 	public int decr()
@@ -81,9 +82,6 @@ public class BeamStatus implements UserStreamLogic
 		}
 		else
 		{
-			String sz = i > 100 ? "Java神の怒りに触れ\n" : "";
-			i = i > 100 ? 100 : i;
-			JOptionPane.showConfirmDialog(null, sz+i+"のダメージを受けました");
 		}
 	}
 
@@ -104,12 +102,23 @@ public class BeamStatus implements UserStreamLogic
 	public boolean getRandomEmet()
 	{
 		if(isFullPower()) return false;
-		return new Random().nextInt(8) == 0;
+		return new Random().nextInt(12) == 0;
 	}
 
 	public void setRefresher(BeamButtonRefresher bbr)
 	{
 		_bbr = bbr;
+	}
+
+	public void load()
+	{
+		PluginMain._data.setDefaultValue("JavaPower", _power);
+		_power = PluginMain._data.getInt("JavaPower");
+	}
+
+	public void save()
+	{
+		PluginMain._data.setInt("JavaPower", _power);
 	}
 
 	@Override

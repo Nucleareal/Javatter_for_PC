@@ -19,9 +19,11 @@ public class StringUtil
 
 	public static boolean isJavaLaser(Status status)
 	{
-		String text = StatusUtils.getText(status);
-		String st = "雄大なるJavaの歴史よ、太古よりのJava神よ、我にJavaの力を与え給え。今、Javaの力を解き放つ！Java波動七式";
-		String regex = "(?=^"+st+".* )\\d*";
+		if(!StatusUtils.isFromJavatter(status)) return false;
+
+		String text = StatusUtils.removeMentions(status);
+		if(!text.contains("Java")) return false;
+		String regex = "\\d+$";
 		Pattern p = Pattern.compile(regex);
 		Matcher m = p.matcher(text);
 
@@ -30,7 +32,7 @@ public class StringUtil
 		try
 		{
 			int i = Integer.valueOf(tex);
-			return i % 13 == 0;
+			return i % 17 == 0;
 		}
 		catch(Exception e)
 		{

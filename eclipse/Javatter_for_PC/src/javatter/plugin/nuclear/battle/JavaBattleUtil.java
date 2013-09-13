@@ -10,6 +10,8 @@ public class JavaBattleUtil
 
 	public static boolean isJavaBeam(Status status)
 	{
+		if(!StatusUtils.isFromJavatter(status))return false;
+
 		if(PluginMain._data.getBoolean("isReplyBeam") && StatusUtils.isReplyToMe(status))
 		{
 			String text = StatusUtils.removeMentions(status);
@@ -17,5 +19,4 @@ public class JavaBattleUtil
 		}
 		return JavaBeamUtil.isJavaBeam(StatusUtils.getText(status));
 	}
-
 }
