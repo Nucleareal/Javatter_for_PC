@@ -3,7 +3,6 @@ package javatter.plugin.nuclear.battle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
-import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -28,7 +27,6 @@ public class Refrecter
 			JButton jb = ((JButton)button);
 			final TwitterUtil tu = (TwitterUtil)util;
 			jb.removeActionListener(mainView);
-			final Random rand = new Random();
 			jb.addActionListener(new ActionListener()
 			{
 				@Override

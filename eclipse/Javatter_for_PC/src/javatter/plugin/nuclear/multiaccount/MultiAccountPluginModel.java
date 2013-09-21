@@ -1,11 +1,11 @@
 package javatter.plugin.nuclear.multiaccount;
 
-import javatter.plugin.nuclear.PluginModelAdapter;
+import javatter.plugin.nuclear.ModelAdapter;
 import javatter.plugin.nuclear.StatusUtils;
 import twitter4j.Status;
 import twitter4j.User;
 
-public class MultiAccountPluginModel extends PluginModelAdapter
+public class MultiAccountPluginModel extends ModelAdapter
 {
 	@Override
 	public void onStatus(Status status)

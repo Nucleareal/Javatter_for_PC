@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javatter.plugin.nuclear.Builder_Button;
-import javatter.plugin.nuclear.PluginConfigAdapter;
+import javatter.plugin.nuclear.ConfigAdapter;
 
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
@@ -13,7 +13,7 @@ import javax.swing.UIManager;
 
 import com.orekyuu.javatter.util.SaveData;
 
-public class LookAndFeelConfig extends PluginConfigAdapter
+public class LookAndFeelConfig extends ConfigAdapter
 {
 	public LookAndFeelConfig(SaveData data)
 	{

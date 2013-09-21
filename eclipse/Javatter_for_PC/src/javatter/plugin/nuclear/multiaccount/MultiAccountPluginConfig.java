@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 import javatter.plugin.nuclear.Builder_Button;
 import javatter.plugin.nuclear.Builder_CheckBox;
-import javatter.plugin.nuclear.PluginConfigAdapter;
+import javatter.plugin.nuclear.ConfigAdapter;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 
 import com.orekyuu.javatter.util.SaveData;
 
-public class MultiAccountPluginConfig extends PluginConfigAdapter
+public class MultiAccountPluginConfig extends ConfigAdapter
 {
 	public MultiAccountPluginConfig(SaveData data)
 	{

@@ -25,17 +25,17 @@ public class JavatterBeamPulser
 
 	private static String slime(String text)
 	{
-		String be = StringUtil.repeat("ﾋﾞ", 3+rand(20));
-		String ww = StringUtil.repeat("w", 3+rand(20));
-		String sx = text+"Javaビーム"+be+ww;
+		String be = StringUtil.repeat("ﾎﾞ", 3+rand(10));
+		String ww = StringUtil.repeat("…", 3+rand(10));
+		String sx = text+"Javaスライムｼﾞｮ"+be+ww;
 		return sx;
 	}
 
 	private static String beam(String text)
 	{
-		String be = StringUtil.repeat("ﾎﾞ", 3+rand(10));
-		String ww = StringUtil.repeat("…", 3+rand(10));
-		String sx = text+"Javaスライムｼﾞｮ"+be+ww;
+		String be = StringUtil.repeat("ﾋﾞ", 3+rand(20));
+		String ww = StringUtil.repeat("w", 3+rand(20));
+		String sx = text+"Javaビーム"+be+ww;
 		return sx;
 	}
 

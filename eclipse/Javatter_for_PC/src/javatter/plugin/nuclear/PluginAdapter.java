@@ -10,10 +10,10 @@ public abstract class PluginAdapter extends JavatterPlugin
 {
 	private UserStreamController _cont;
 	private UserStreamLogic _logic;
-	private Class<? extends PluginConfigAdapter> _cq;
+	private Class<? extends ConfigAdapter> _cq;
 	protected SaveData _data;
 
-	protected boolean init(Class<? extends PluginModelAdapter> clazz, Class<? extends PluginConfigAdapter> claqq)
+	protected boolean init(Class<? extends ModelAdapter> clazz, Class<? extends ConfigAdapter> claqq)
 	{
 		boolean result = true;
 		_data = getSaveData();

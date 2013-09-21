@@ -3,7 +3,7 @@ package javatter.plugin.nuclear.battle;
 import java.util.Random;
 
 import javatter.plugin.nuclear.NumberUtil;
-import javatter.plugin.nuclear.PluginModelAdapter;
+import javatter.plugin.nuclear.ModelAdapter;
 import javatter.plugin.nuclear.StatusUtils;
 import javatter.plugin.nuclear.StringUtil;
 
@@ -14,7 +14,7 @@ import twitter4j.StatusUpdate;
 
 import com.orekyuu.javatter.account.TwitterManager;
 
-public class JavatterBattleModel extends PluginModelAdapter
+public class JavatterBattleModel extends ModelAdapter
 {
 	@Override
 	public void onStatus(Status status)
@@ -30,6 +30,7 @@ public class JavatterBattleModel extends PluginModelAdapter
 			}
 			catch(Exception e)
 			{
+				e.printStackTrace();
 				return;
 			}
 			if(JavaBattleUtil.isJavaBeam(status))
@@ -72,12 +73,31 @@ public class JavatterBattleModel extends PluginModelAdapter
 				{
 				}
 			}
-			if(StringUtil.isJavaLaser(status))
+			if(JavaBattleUtil.isJavaLazer(status))
 			{
 				BeamStatus.get().addDamage(100);
 			}
-		}
+			if(JavaBattleUtil.isJavaSlime(status))
+			{
+				String header = StatusUtils.getInReplyToHeader(status);
+				String text = "そのスライム、斬らせてもらう"+StringUtil.repeat("！", 3+new Random().nextInt(10));
 
+				StatusUpdate su = new StatusUpdate(header+text);
+				su.setInReplyToStatusId(status.getId());
+				try
+				{
+					TwitterManager.getInstance().getTwitter().updateStatus(su);
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+			if(JavaBattleUtil.isSimeSlayer(status))
+			{
+				BeamStatus.get().addDamage(20+new Random().nextInt(31));
+			}
+		}
 	}
 
 	public int getPower(long seed)

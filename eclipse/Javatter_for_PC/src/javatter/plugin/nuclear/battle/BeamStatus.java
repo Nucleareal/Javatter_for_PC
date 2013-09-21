@@ -7,12 +7,19 @@ import javatter.plugin.nuclear.NumberUtil;
 
 import javax.swing.JOptionPane;
 
+import twitter4j.DirectMessage;
+import twitter4j.StallWarning;
 import twitter4j.Status;
+import twitter4j.StatusDeletionNotice;
+import twitter4j.TwitterException;
+import twitter4j.User;
+import twitter4j.UserList;
+import twitter4j.UserStreamListener;
 
-import com.orekyuu.javatter.logic.UserStreamLogic;
-import com.orekyuu.javatter.viewobserver.UserStreamViewObserver;
+import com.orekyuu.javatter.account.TwitterManager;
+import com.orekyuu.javatter.controller.UserStreamController;
 
-public class BeamStatus implements UserStreamLogic
+public class BeamStatus extends UserStreamController implements UserStreamListener
 {
 	private BeamStatus(){}
 	private static BeamStatus _ins = new BeamStatus();
@@ -122,30 +129,184 @@ public class BeamStatus implements UserStreamLogic
 	}
 
 	@Override
-	public Status getStatus()
+	public void onDeletionNotice(StatusDeletionNotice arg0)
 	{
-		return null;
+		// TODO 自動生成されたメソッド・スタブ
+
 	}
 
 	@Override
-	public void onStatus(Status status)
+	public void onScrubGeo(long arg0, long arg1)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onStallWarning(StallWarning arg0)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onStatus(Status arg0)
 	{
 		increment(2);
 	}
 
 	@Override
-	public void onReplyTweet(Status status)
+	public void onTrackLimitationNotice(int arg0)
 	{
+		// TODO 自動生成されたメソッド・スタブ
+
 	}
 
 	@Override
-	public void onRetweetTweet(Status status)
+	public void onException(Exception e)
 	{
+		System.out.println("JB Plugin Debug:");
+		e.printStackTrace();
 	}
 
 	@Override
-	public void setView(UserStreamViewObserver view)
+	public void onBlock(User arg0, User arg1)
 	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onDeletionNotice(long arg0, long arg1)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onDirectMessage(DirectMessage arg0)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onFavorite(User src, User target, Status s)
+	{
+		if(src.getId() == target.getId()) return;
+		long id = -1L;
+		try
+		{
+			id = TwitterManager.getInstance().getTwitter().getId();
+		}
+		catch (IllegalStateException | TwitterException e)
+		{
+			e.printStackTrace();
+		}
+		if(src.getId() == id)
+		{
+			merculy(1, true);
+			return;
+		}
+		if(target.getId() == id)
+		{
+			merculy(4, false);
+			return;
+		}
+		return;
+	}
+
+	private long prev = System.currentTimeMillis();
+
+	private void merculy(int i, boolean isBomb)
+	{
+		long n = System.currentTimeMillis();
+		if(isBomb && n - prev < 1000) return;
+		_damage = NumberUtil.clamp(0, 255, _damage-i);
+	}
+
+	@Override
+	public void onFollow(User arg0, User arg1)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onFriendList(long[] arg0)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onUnblock(User arg0, User arg1)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onUnfavorite(User arg0, User arg1, Status arg2)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onUserListCreation(User arg0, UserList arg1)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onUserListDeletion(User arg0, UserList arg1)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onUserListMemberAddition(User arg0, User arg1, UserList arg2)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onUserListMemberDeletion(User arg0, User arg1, UserList arg2)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onUserListSubscription(User arg0, User arg1, UserList arg2)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onUserListUnsubscription(User arg0, User arg1, UserList arg2)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onUserListUpdate(User arg0, UserList arg1)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void onUserProfileUpdate(User arg0)
+	{
+		// TODO 自動生成されたメソッド・スタブ
+
 	}
 
 	/* UserStream Methods */

@@ -1,9 +1,9 @@
 package javatter.plugin.nuclear.battle;
 
+import javatter.plugin.nuclear.CheckData;
 import javatter.plugin.nuclear.PluginAdapter;
 import javatter.plugin.nuclear.UpdateChecker;
 
-import com.orekyuu.javatter.controller.UserStreamController;
 import com.orekyuu.javatter.util.SaveData;
 import com.orekyuu.javatter.view.IJavatterTab;
 
@@ -11,6 +11,20 @@ public class PluginMain extends PluginAdapter
 {
 	protected static SaveData _data;
 	private static PluginMain _ins;
+	public static final String NAME = "JavatterBattle";
+	private static CheckData _cd;
+
+	public PluginMain()
+	{
+		_cd = new CheckData();
+		_cd.name = NAME;
+		_cd.version = version();
+	}
+
+	public static CheckData getCheckData()
+	{
+		return _cd;
+	}
 
 	@Override
 	public void init()
@@ -23,13 +37,11 @@ public class PluginMain extends PluginAdapter
 		setDefault("isAutoGuard", true);
 		setDefault("isAlertOnBeam", true);
 		BeamStatus.get().init();
-		UserStreamController us = new UserStreamController();
-		us.setModel(BeamStatus.get());
-		addUserStreamListener(us);
+		addUserStreamListener(BeamStatus.get());
 
 		Refrecter.tryIn(getMainView());
 
-		UpdateChecker.checkNeedToUpdate(version(), "JavatterBattle");
+		UpdateChecker.checkNeedToUpdate(version(), NAME);
 		getMainView().getMainFrame().addWindowListener(new CloseSaver());
 
 		_ins = this;
@@ -58,8 +70,8 @@ public class PluginMain extends PluginAdapter
 		return new JavatterBattleConfig(getSaveData());
 	}
 
-	private String version()
+	public String version()
 	{
-		return "9";
+		return "11";
 	}
 }

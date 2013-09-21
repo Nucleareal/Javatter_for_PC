@@ -71,4 +71,32 @@ public class StatusUtils
 	{
 		return status.getSource().contains("Javatter");
 	}
+
+	public static Status getInReplyToStatus(Status status)
+	{
+		Status s = status;
+		try
+		{
+			long id = s.getInReplyToStatusId();
+			if(id > 0)
+				s = TwitterManager.getInstance().getTwitter().showStatus(id);
+		}
+		catch(Exception e)
+		{
+		}
+		return s;
+	}
+
+	public static boolean isMyStatus(Status s)
+	{
+		long l = -1L;
+		try
+		{
+			l = TwitterManager.getInstance().getTwitter().getId();
+		}
+		catch(Exception e)
+		{
+		}
+		return l == s.getUser().getId();
+	}
 }

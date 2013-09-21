@@ -6,8 +6,9 @@ import java.awt.event.ActionListener;
 import javatter.plugin.nuclear.Builder_Button;
 import javatter.plugin.nuclear.Builder_CheckBox;
 import javatter.plugin.nuclear.Builder_Label;
-import javatter.plugin.nuclear.PluginConfigAdapter;
+import javatter.plugin.nuclear.ConfigAdapter;
 import javatter.plugin.nuclear.URIOpener;
+import javatter.plugin.nuclear.UpdateCheckListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -15,7 +16,7 @@ import javax.swing.JLabel;
 
 import com.orekyuu.javatter.util.SaveData;
 
-public class JavatterBattleConfig extends PluginConfigAdapter
+public class JavatterBattleConfig extends ConfigAdapter
 {
 	public JavatterBattleConfig(SaveData data)
 	{
@@ -37,6 +38,8 @@ public class JavatterBattleConfig extends PluginConfigAdapter
 
 		JButton jb = new Builder_Button(_data).create("フォーラムを開く", "openSite", new ActionListener[]{new URIOpener("http://www1221uj.sakura.ne.jp//bbs/viewtopic.php?f=4&t=9")});
 
-		return queuing(box, rep, auto, hand, lb, jb);
+		JButton tnc = new Builder_Button(_data).create("更新を確認する", "NewVersionCheck", new ActionListener[]{new UpdateCheckListener(PluginMain.getCheckData())});
+
+		return queuing(box, rep, auto, hand, lb, jb, tnc);
 	}
 }

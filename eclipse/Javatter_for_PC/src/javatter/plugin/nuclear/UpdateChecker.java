@@ -43,8 +43,9 @@ public class UpdateChecker
 			while(sc.hasNextLine())
 			{
 				sz = sc.nextLine();
-				msg += sz;
+				msg += sz+"\n";
 			}
+			sc.close();
 			in.close();
 		}
 		catch(Exception e)
@@ -69,5 +70,10 @@ public class UpdateChecker
 			{
 			}
 		}
+	}
+
+	public static void checkNeedToUpdate(CheckData cd)
+	{
+		checkNeedToUpdate(cd.version, cd.name);
 	}
 }

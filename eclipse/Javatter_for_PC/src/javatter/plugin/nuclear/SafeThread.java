@@ -9,8 +9,13 @@ public abstract class SafeThread extends Thread
 		_isRunning = true;
 	}
 
+	protected abstract void initialize();
+
+	protected abstract void finalize();
+
 	public void run()
 	{
+		initialize();
 		while(_isRunning)
 		{
 			try
@@ -23,6 +28,7 @@ public abstract class SafeThread extends Thread
 				exit();
 			}
 		}
+		finalize();
 	}
 
 	public void exit()
