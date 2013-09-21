@@ -20,10 +20,11 @@ public class NicoFrame extends JFrame
 	public NicoFrame(String title, int screenNo)
 	{
 		super(title);
-		getRootPane().setDoubleBuffered(true);
-		((JComponent)getContentPane()).setDoubleBuffered(true);
 		setUndecorated(true);
 		setAlwaysOnTop(true);
+		getRootPane().setDoubleBuffered(true);
+		((JComponent)getContentPane()).setDoubleBuffered(true);
+
 		setBackground(transColor);
 		getContentPane().setBackground(transColor);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -31,8 +32,6 @@ public class NicoFrame extends JFrame
 
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(_pane = new NicoPane());
-		setVisible(false);
-		setUndecorated(true);
 	}
 
 	public void onStatus(Status s)

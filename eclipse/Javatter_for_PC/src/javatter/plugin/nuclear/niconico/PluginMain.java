@@ -18,10 +18,11 @@ public class PluginMain extends PluginAdapter
 		super.init(Model.class, Config.class);
 
 		UpdateChecker.checkNeedToUpdate(version(), "NicoNico");
+		_d = getSaveData();
 
 		_t = new NicoThread();
 		_t.start();
-		_d = getSaveData();
+
 		setDefault("ScrollSpeed", "4");
 	}
 

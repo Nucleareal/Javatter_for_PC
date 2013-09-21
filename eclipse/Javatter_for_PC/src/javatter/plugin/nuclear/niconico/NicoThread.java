@@ -15,7 +15,14 @@ public class NicoThread extends SafeThread
 	protected void initialize()
 	{
 		_counter = 0;
-		Controller.initialize();
+		try
+		{
+			Controller.initialize();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		_queue = new ArrayBlockingQueue<>(100, true);
 	}
 
