@@ -100,10 +100,10 @@ public class BeamStatus extends UserStreamController implements UserStreamListen
 	public String getText()
 	{
 		if(!isAvailableBeam())
-			return "まだ撃てない";
+			return "javaビーム";
 		if(!isFullPower())
 			return "Javaビーム";
-		return "Javaビーム！";
+		return "JAVAビーム";
 	}
 
 	public boolean getRandomEmet()

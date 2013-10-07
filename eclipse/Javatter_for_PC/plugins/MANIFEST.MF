@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Plugin-Main: javatter.plugin.nuclear.niconico.PluginMain
+Plugin-Main: javatter.plugin.nuclear.battle.PluginMain
