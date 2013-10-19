@@ -72,6 +72,6 @@ public class PluginMain extends PluginAdapter
 
 	public String version()
 	{
-		return "14";
+		return "15";
 	}
 }

@@ -21,11 +21,6 @@ public class ResultedThread extends SafeThread
 	@Override
 	protected void finalize()
 	{
-	}
-
-	@Override
-	protected void safeRun() throws Exception
-	{
 		switch(res)
 		{
 			case Action : handler.DoAction(); break;
@@ -33,5 +28,11 @@ public class ResultedThread extends SafeThread
 			default:
 				break;
 		}
+	}
+
+	@Override
+	protected void safeRun() throws Exception
+	{
+		exit();
 	}
 }

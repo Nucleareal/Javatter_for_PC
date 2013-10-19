@@ -19,6 +19,8 @@ public enum BattleType
 		@Override
 		public void DoAction(Status status)
 		{
+			if(!BeamStatus.get().isLeftPower()) return;
+
 			int EnPower = getPower(status.getId());
 			String EnPowerStr = String.format("%03d", EnPower);
 

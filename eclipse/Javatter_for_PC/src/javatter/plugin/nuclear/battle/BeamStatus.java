@@ -92,6 +92,11 @@ public class BeamStatus extends UserStreamController implements UserStreamListen
 		}
 	}
 
+	public boolean isLeftPower()
+	{
+		return _power > 0;
+	}
+
 	public String getHP()
 	{
 		return "Java体力: "+(100 - (_damage*100)/255)+"%";
